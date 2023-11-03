@@ -1,6 +1,6 @@
 package comm.sevenJava.application.controllers;
 
-import comm.sevenJava.domain.dtos.SignUpDTO;
+import comm.sevenJava.domain.dto.SignUpDTO;
 import comm.sevenJava.domain.interfaces.IUserService;
 import comm.sevenJava.domain.models.User;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,17 @@ public class UserController {
     public ResponseEntity<Object> getUser(@RequestParam("userId") Integer userId) {
         try {
             User user = userService.getUser(userId);
+
+            return ResponseEntity.ok(user);
+        } catch(Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("/get-current-user")
+    public ResponseEntity<Object> getCurrentUser() {
+        try {
+            User user = userService.getCurrentUser();
 
             return ResponseEntity.ok(user);
         } catch(Exception ex) {
